@@ -1,0 +1,10 @@
+#! env ruby
+
+require 'pp'
+
+r = /#[\w\-]+/
+
+EXCLUDED_TAGS = %w(#tweet #tweeted)
+tagged_text = File.read("a.txt").split("\n").select {|line| line[0] == '#'}.join("\n")
+tags = tagged_text.scan(r).reject {|tag| EXCLUDED_TAGS.include? tag }.flatten.uniq
+puts tags.map {|tag| tag.sub('#', '') }.sort

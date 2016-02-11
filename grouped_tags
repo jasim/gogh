@@ -1,0 +1,14 @@
+#! env ruby
+
+require 'pp'
+
+r = /#[\w\-]+/
+
+EXCLUDED_TAGS = %w(#tweet #tweeted)
+tagged_text = File.read("a.txt").split("\n").select {|line| line[0] == '#'}
+
+tags = tagged_text.map { |line, i|
+  line.scan(r).reject {|tag| EXCLUDED_TAGS.include? tag }.uniq
+}.uniq
+
+pp tags
